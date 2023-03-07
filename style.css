@@ -1,0 +1,51 @@
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 50px;
+}
+
+.line {
+	stroke-width: 3px;
+	stroke: darkgray;
+}
+
+.square {
+	border: 5px solid lightgray;
+}
+
+.highlighted {
+	border: 5px solid black;
+	stroke: black;
+}
+
+.xWon {
+	background-color: rgba(164, 163, 204, 0.3);
+}
+
+.oWon {
+	background-color: rgba(2, 45, 15, 0.3);
+}
+
+.screen {
+	background-color: rgba(255, 255, 255, 0.6);
+	position: absolute;
+	top: 0;
+	top: 0;
+}
+
+#user-controls {
+	width: 40%;
+	height: 100%;
+	text-align: center;
+}
+
+#win-text {
+	position: absolute;
+	font-size: 100px;
+}
