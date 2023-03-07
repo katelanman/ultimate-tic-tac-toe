@@ -1,1 +1,3 @@
-# ultimate-tic-tac-toe
+# Ultimate Tic-tac-toe
+### Description
+A two player ultimate tic-tac-toe game. 
