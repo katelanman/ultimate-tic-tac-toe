@@ -1,17 +1,21 @@
-const FRAME_WIDTH = 750;
-const FRAME_HEIGHT = 750;
+import {arrayUnique, hexToRgb} from "/js/utils.js";
+
+const FRAME_WIDTH = 750,
+	  FRAME_HEIGHT = 750;
 
 let size = document.getElementById("board-size").value;
 
 let boxWidth = (FRAME_WIDTH / size),
 	boxHeight = (FRAME_HEIGHT / size);
 
-let player = "x";
-let played = {};
-let turns = 0;
-let won = {};
-let nextPlay = "";
-let filled = [];
+let player = "",
+	played = {},
+	turns = 0,
+	won = {},
+	nextPlay = "",
+	filled = [],
+	xColor = "rgba(169, 169, 170, 0.3)",
+	oColor = "rgba(2, 45, 15, 0.3)";
 
 let inProgress = true;
 
@@ -30,6 +34,13 @@ function newGame() {
 	nextPlay = "";
 	filled = [];
 
+	if (document.getElementById("x-color").value != "#ffffff") {
+		xColor = "rgba(" + hexToRgb(document.getElementById("x-color").value) + ", 0.3)";
+	}
+	if (document.getElementById("o-color").value != "#ffffff") {
+		oColor = "rgba(" + hexToRgb(document.getElementById("o-color").value) + ", 0.3)";
+	}
+
 	inProgress = true;
 
 	makeBoard();
@@ -45,9 +56,26 @@ function gameWon() {
 
 	d3.select("#main-board").append("p")
 			.attr("id", "win-text")
-			.style("top", (FRAME_HEIGHT / 2) - 140 + "px")
-			.style("left", (FRAME_WIDTH / 2) - 140 + "px")
+			.style("top", (FRAME_HEIGHT / 2) - 150 + "px")
+			.style("left", (FRAME_WIDTH / 2) - 130 + "px")
 			.html(player + " wins!");
+
+	trackWins(player, turns);
+}
+
+function gameTie() {
+	d3.selectAll(".highlighted").classed("highlighted", false);
+
+	d3.select("#main-board").append("div")
+			.attr("class", "screen")
+			.style("width", FRAME_WIDTH + 25 + "px")
+			.style("height", FRAME_HEIGHT + 25 + "px");
+
+	d3.select("#main-board").append("p")
+			.attr("id", "win-text")
+			.style("top", (FRAME_HEIGHT / 2) - 150 + "px")
+			.style("left", (FRAME_WIDTH / 2) - 130 + "px")
+			.html("tie game");
 }
 
 // check if someone won game
@@ -124,27 +152,17 @@ function checkWin(lastPlay) {
 
 }
 
-function hexToRgb(hex) {
-	let r = parseInt(hex.slice(1, 3), 16),
-    	g = parseInt(hex.slice(3, 5), 16),
-    	b = parseInt(hex.slice(5, 7), 16);
-    
-    return r + "," + g + "," + b;
-}
-
 // reflect box won
 function boxWon(box) {
 	let color = "";
 
 	if (player == "x") {
-		color = "rgba(" + hexToRgb(document.getElementById("x-color").value) + ", 0.3)";
+		d3.select("#" + box).style("background-color", xColor);
 	}
 
 	else {
-		color = "rgba(" + hexToRgb(document.getElementById("o-color").value) + ", 0.3)";
+		d3.select("#" + box).style("background-color", oColor);
 	}
-
-	d3.select("#" + box).style("background-color", color);
 }
 
 // check if someone won a box
@@ -227,7 +245,9 @@ function checkBoxWin(box, lastPlay) {
 // get attributes of box clicked on
 function getBox(x, y) {
 	let col = null,
-		row = null;
+		row = null,
+		centerX = null,
+		centerY = null;
 
 	let colWidth = boxWidth / size,
 		rowHeight = boxHeight / size;
@@ -276,6 +296,15 @@ function turn() {
 		return;
 	}
 
+	let color = ""
+
+	if (player == "x") {
+		color = xColor;
+	}
+	else {
+		color = oColor;
+	}
+
 	// place marker
 	d3.select("#" + box).append("text")
 		.attr("x", centerX)
@@ -283,6 +312,8 @@ function turn() {
 		.attr("text-anchor", "middle")
 		.attr("alignment-baseline", "middle")
 		.style("font-size", "40px")
+		.style("fill", color.slice(0, -4) + " 1)")
+		.style("stroke", "none")
 		.text(player);
 
 	// reflect played
@@ -293,7 +324,7 @@ function turn() {
 
 	turns ++;
 
-	// if sufficient turns played and last play in unwon box
+	// if enough turns played and last play in unwon box
 	if ( turns >= (2 * size - 1) && !(box in won) ) {
 
 		// check if box won
@@ -306,6 +337,13 @@ function turn() {
 				gameWon();
 			}
 		}
+	}
+
+	// check if tie
+	let merged = arrayUnique(Object.keys(won).concat(filled));
+	if (merged.length == (size ** 2)) {
+		inProgress = false; 
+		gameTie();
 	}
 
 	// next player
@@ -321,18 +359,6 @@ function turn() {
 	}	
 
 	nextPlay = square;
-}
-
-function sizeChange() {
-	if (turns > 0) {
-		if (confirm("Are you sure? This will restart the game")) {
-			newGame();
-		} 
-	}
-
-	else {
-		newGame();
-	}
 }
 
 // add line svg element
@@ -394,7 +420,7 @@ function makeBoard() {
 
 newGame();
 
-d3.select("#start-game").selection().on("click", () => {
+d3.select("#reset-game").selection().on("click", () => {
 		if (turns > 0) {
 			if (confirm("Are you sure? This will restart the game")) {
 				newGame();
@@ -404,7 +430,5 @@ d3.select("#start-game").selection().on("click", () => {
 			newGame();
 		}
 	});
-
-d3.select("#size-submit").selection().on("click", sizeChange);
 
 

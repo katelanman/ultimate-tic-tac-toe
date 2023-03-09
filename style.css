@@ -1,3 +1,8 @@
+body {
+	font-family: gill sans;
+	font-size: 20px;
+}
+
 .row {
 	display: flex;
 	flex-direction: row;
@@ -25,7 +30,7 @@
 }
 
 .xWon {
-	background-color: rgba(164, 163, 204, 0.3);
+	background-color: rgba(169, 169, 170, 0.3);
 }
 
 .oWon {
@@ -39,10 +44,30 @@
 	top: 0;
 }
 
+.colorpicker {
+	width: 130px;
+	height: 130px;
+	border: none;
+	margin-bottom: 10px;
+}
+
+.controls {
+	padding: 20px;
+}
+
 #user-controls {
 	width: 40%;
 	height: 100%;
 	text-align: center;
+}
+
+#board-size {
+	font-size: 20px;
+}
+
+#reset-game {
+	font-size: 30px;
+	margin: 20px;
 }
 
 #win-text {
