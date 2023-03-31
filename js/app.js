@@ -1,4 +1,4 @@
-import {arrayUnique, hexToRgb} from "js/utils.js";
+import {arrayUnique, hexToRgb} from "./utils.js";
 
 const FRAME_WIDTH = 750,
 	  FRAME_HEIGHT = 750;
