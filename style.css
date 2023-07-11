@@ -12,7 +12,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	padding: 50px;
+	padding: 15px 50px;
 }
 
 .line {
@@ -48,16 +48,16 @@ body {
 	width: 130px;
 	height: 130px;
 	border: none;
-	margin-bottom: 10px;
+	margin: 10px 25px;
 }
 
 .controls {
 	padding: 20px;
 }
 
-#user-controls {
-	width: 40%;
-	height: 100%;
+#extra {
+	width: 40vw;
+	height: 100vh;
 	text-align: center;
 }
 
@@ -68,9 +68,18 @@ body {
 #reset-game {
 	font-size: 30px;
 	margin: 20px;
+	position: relative;
+	top: 25%;
+	width: 90%;
+	height: 45%;
 }
 
 #win-text {
 	position: absolute;
 	font-size: 100px;
 }
+
+#scrollbox {
+	overflow: auto;
+}
+

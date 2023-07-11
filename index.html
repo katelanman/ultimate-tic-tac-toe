@@ -14,38 +14,46 @@
 		<!-- div for game board -->
 		<div id="main-board"></div>
 
-		<!-- div for various user controlled game controls -->
-		<div id="user-controls" class="col">
-			<div class="controls">
-				<label for="board-size">Board Size:</label>
-				<select id="board-size">
-					<option value=2>2x2</option>
-					<option value=3 selected="selected">3x3</option>
-					<option value=4>4x4</option>
-					<option value=5>5x5</option>
-
-				</select>
+		<div id="extra" class="col">
+			<!-- div for text and instructions -->
+			<div id="home-text">
+				<h1 class="row"> Ultimate Tic Tac Toe </h1>
+				<p id="scrollbox" class="row"> this is filler text </p>
 			</div>
 
-	   		<div class="row controls">
-	   			<div class="col">
-		   			<input type="color" id="x-color" class="colorpicker" value="#A9A9AA">
-		   			<label for="x-color">Player X Color</label>
-		   		</div>
-		   		<div class="col">
-		   			<input type="color" id="o-color" class="colorpicker" value="#8998B5"/>
-					<label for="o-color">Player O Color</label>
+			<!-- div for various user controlled game controls -->
+			<div id="user-controls">
+				<div class="controls" class="row">
+					<label for="board-size">Board Size:</label>
+					<select id="board-size">
+						<option value=2>2x2</option>
+						<option value=3 selected="selected">3x3</option>
+						<option value=4>4x4</option>
+						<option value=5>5x5</option>
+
+					</select>
 				</div>
-	   		</div>
 
-	   		<!-- starts new game -->
-			<button id="reset-game">New Game</button>
+		   		<div class="row controls">
+			   		<label> 
+			   			<input type="color" id="x-color" class="colorpicker" 	value="#A9A9AA">
+			   			Player X Color
+			   		</label>
+			   		<label> 
+			   			<input type="color" id="o-color" class="colorpicker" 	value="#8998B5"/>
+			   			Player O Color
+			   		</label>
+		   		</div>
 
+		   		<!-- starts new game -->
+				<button id="reset-game">New Game</button>
+
+			</div>
 		</div>
 
 	</div>
 
-	<script src="/js/app.js" type="module"></script>
+	<script src="/js/main.js" type="module"></script>
 	<script src="/js/utils.js" type="module"></script>
 </body>
 </html>
